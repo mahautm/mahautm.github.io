@@ -1,32 +1,37 @@
 /* CSS styles remain the same */
 
-/* Add the following new CSS styles for the animation */
-@keyframes pulse {
-    0% {
-        box-shadow: 0 0 10px #ffd700;
-        /* Initial box shadow */
-    }
-
-    50% {
-        box-shadow: 0 0 20px #ffd700;
-        /* Intermediate box shadow */
-    }
-
-    100% {
-        box-shadow: 0 0 10px #ffd700;
-        /* Final box shadow */
-    }
+nav {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
 }
 
-.profile img {
-    width: 200px;
-    height: auto;
-    border-radius: 50%;
-    margin-right: 40px;
-    animation: pulse 2s infinite;
-    /* Apply the animation */
-    animation-delay: 1s;
-    /* Add a delay for the animation to start */
-    box-shadow: 0 0 10px #ffd700;
-    /* Initial box shadow */
+.tabs {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
+
+.tabs li {
+    margin-right: 20px;
+}
+
+.tabs li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px;
+}
+
+.tabs li a:hover {
+    background-color: #555;
+}
+
+.tab-content {
+    display: none;
+}
+
+footer {
+    /* CSS styles remain the same */
 }
