@@ -2,13 +2,14 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f7dede;
-    /* Pale light red background color */
+    background-color: #f2f2f2;
+    /* Light gray background color */
+    color: #333;
+    /* Dark text color */
 }
 
 header {
-    background-color: #c15555;
-    /* Darker red header background color */
+    background-color: #333;
     color: #fff;
     padding: 20px;
     text-align: center;
@@ -16,15 +17,21 @@ header {
 
 h1 {
     margin: 0;
+    font-size: 32px;
 }
 
 section {
     margin: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
-    color: #c15555;
-    /* Darker red section heading color */
+    color: #333;
+    font-size: 24px;
+    margin-top: 0;
 }
 
 ul {
@@ -33,21 +40,29 @@ ul {
 }
 
 footer {
-    background-color: #c15555;
-    /* Darker red footer background color */
+    background-color: #333;
     color: #fff;
     padding: 10px;
     text-align: center;
 }
 
-.profile-picture {
-    text-align: center;
-    margin-bottom: 20px;
+.profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.profile-picture img {
+.profile img {
     width: 200px;
-    /* Adjust the width as needed */
     height: auto;
     border-radius: 50%;
+    margin-right: 20px;
+}
+
+.profile-info {
+    flex-grow: 1;
+}
+
+p {
+    line-height: 1.5;
 }
