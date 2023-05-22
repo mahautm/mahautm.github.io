@@ -1,40 +1,32 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f2f2f2;
-    /* Light gray background color */
-    color: #333;
-    /* Dark text color */
-    line-height: 1.6;
+/* CSS styles remain the same */
+
+/* Add the following new CSS styles for the animation */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 10px #ffd700;
+        /* Initial box shadow */
+    }
+
+    50% {
+        box-shadow: 0 0 20px #ffd700;
+        /* Intermediate box shadow */
+    }
+
+    100% {
+        box-shadow: 0 0 10px #ffd700;
+        /* Final box shadow */
+    }
 }
 
-header {
-    background-color: #ffa600;
-    /* Fun orange header background color */
-    color: #fff;
-    padding: 20px;
-    text-align: center;
-}
-
-h1 {
-    margin: 0;
-    font-size: 40px;
-    /* Larger heading font size */
-}
-
-section {
-    margin: 40px;
-    padding: 40px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-h2 {
-    color: #ffa600;
-    /* Fun orange section heading color */
-    font-size: 28px;
-    margin-top: 0;
-    margin-bottom: 20px
+.profile img {
+    width: 200px;
+    height: auto;
+    border-radius: 50%;
+    margin-right: 40px;
+    animation: pulse 2s infinite;
+    /* Apply the animation */
+    animation-delay: 1s;
+    /* Add a delay for the animation to start */
+    box-shadow: 0 0 10px #ffd700;
+    /* Initial box shadow */
 }
