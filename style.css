@@ -2,10 +2,13 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    background-color: #f7dede;
+    /* Pale light red background color */
 }
 
 header {
-    background-color: #333;
+    background-color: #c15555;
+    /* Darker red header background color */
     color: #fff;
     padding: 20px;
     text-align: center;
@@ -20,7 +23,8 @@ section {
 }
 
 h2 {
-    color: #333;
+    color: #c15555;
+    /* Darker red section heading color */
 }
 
 ul {
@@ -29,8 +33,21 @@ ul {
 }
 
 footer {
-    background-color: #333;
+    background-color: #c15555;
+    /* Darker red footer background color */
     color: #fff;
     padding: 10px;
     text-align: center;
+}
+
+.profile-picture {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-picture img {
+    width: 200px;
+    /* Adjust the width as needed */
+    height: auto;
+    border-radius: 50%;
 }
