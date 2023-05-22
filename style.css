@@ -6,10 +6,12 @@ body {
     /* Light gray background color */
     color: #333;
     /* Dark text color */
+    line-height: 1.6;
 }
 
 header {
-    background-color: #333;
+    background-color: #ffa600;
+    /* Fun orange header background color */
     color: #fff;
     padding: 20px;
     text-align: center;
@@ -17,52 +19,22 @@ header {
 
 h1 {
     margin: 0;
-    font-size: 32px;
+    font-size: 40px;
+    /* Larger heading font size */
 }
 
 section {
-    margin: 20px;
-    padding: 20px;
+    margin: 40px;
+    padding: 40px;
     background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
-    color: #333;
-    font-size: 24px;
+    color: #ffa600;
+    /* Fun orange section heading color */
+    font-size: 28px;
     margin-top: 0;
-}
-
-ul {
-    list-style-type: disc;
-    padding-left: 20px;
-}
-
-footer {
-    background-color: #333;
-    color: #fff;
-    padding: 10px;
-    text-align: center;
-}
-
-.profile {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.profile img {
-    width: 200px;
-    height: auto;
-    border-radius: 50%;
-    margin-right: 20px;
-}
-
-.profile-info {
-    flex-grow: 1;
-}
-
-p {
-    line-height: 1.5;
+    margin-bottom: 20px
 }
