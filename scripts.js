@@ -23,3 +23,9 @@ tabLinks.forEach(tabLink => {
         document.getElementById(targetId).style.display = 'block';
     });
 });
+
+// Show the initially active tab content
+const initialTabLink = document.querySelector('.tabs a');
+initialTabLink.classList.add('active');
+const initialTabContentId = initialTabLink.getAttribute('href').substring(1);
+document.getElementById(initialTabContentId).style.display = 'block';
