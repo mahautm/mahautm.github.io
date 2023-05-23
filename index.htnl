@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Academic Profile</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+</head>
+<body>
+  <header>
+    <h1>My Academic Profile</h1>
+  </header>
+  <nav>
+    <ul class="tabs">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#publications">Publications</a></li>
+    </ul>
+  </nav>
+  <div id="home" class="tab-content">
+    <section>
+      <div class="profile">
+        <img src="your_picture.jpg" alt="Profile Picture">
+        <div class="profile-info">
+          <h2>About Me</h2>
+          <p>Hello there! I'm [Your Name], a passionate [Your Field of Study] enthusiast with a love for [Your Interests]. Let's explore the academic world together!</p>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div id="projects" class="tab-content">
+    <section>
+      <h2>Projects</h2>
+      <ul>
+        <li>[Project 1]</li>
+        <li>[Project 2]</li>
+        <li>[Project 3]</li>
+      </ul>
+    </section>
+  </div>
+  <div id="publications" class="tab-content">
+    <section>
+      <h2>Publications</h2>
+      <ul>
+        <li>[Publication 1]</li>
+        <li>[Publication 2]</li>
+        <li>[Publication 3]</li>
+      </ul>
+    </section>
+  </div>
+  <footer>
+    <p>&copy; 2023 [Your Name]. All rights reserved. Let's connect!</p>
+    <div class="social-icons">
+      <a href="https://scholar.google.com/" class="social-icon"><i class="fab fa-google"></i></a>
+      <a href="https://www.linkedin.com/" class="social-icon"><i class="fab fa-linkedin"></i></a>
+      <a href="https://github.com/" class="social-icon"><i class="fab fa-github"></i></a>
+    </div>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
