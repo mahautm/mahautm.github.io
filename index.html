@@ -103,11 +103,15 @@
             <div class="col-md-8">
               <div class="profile-info">
                 <h2>About Me</h2>
-                <p>Hello there! I'm Matéo, a second year PhD student in the COLT group at Universitat Pompeu Fabra under
-                  the supervision of Marco Baroni. I
-                  work on Emergent communication and multi-agent reinfrocement learning. Before that, I studied at the
-                  École Nationale Supérieure de Cognitique in Bordeaux, and interned at the FLOWERS Inria lab, and the
-                  Institut de Neurosciences de la Timone in Marseille. </p>
+                <p>I'm Matéo, a second year PhD student in the COLT group at Universitat Pompeu Fabra under
+                  the supervision of Marco Baroni. I'm interested in multi-agent cooperation, and am looking at it from
+                  the perspective
+                  of communicating foundation models - using emergent communication and multi-agent reinforcement
+                  learning.
+                  \n
+                  Before that, I got my engineering diploma at the École Nationale Supérieure de Cognitique in Bordeaux,
+                  and interned at the
+                  FLOWERS Inria lab, and the Institut de Neurosciences de la Timone in Marseille.</p>
               </div>
             </div>
           </div>
@@ -121,29 +125,40 @@
         <div class="container">
           <h2 class="text-center">Project: Referential Communication in Heterogeneous Communities of Pre-Trained Visual
             Deep Networks</h2>
+          <p>pdf, poster</p>
           <div class="row justify-content-center">
             <div class="col-md-8">
               <h3>Abstract</h3>
-              <p>As large pre-trained image-processing neural networks are being embedded in autonomous agents such as
-                self-driving cars or robots, the question arises of how such systems can communicate with each other
-                about the surrounding world, despite their different architectures and training regimes.</p>
-              <p>As a first step in this direction, we systematically explore the task of <i>referential
-                  communication</i> in a community of state-of-the-art pre-trained visual networks, showing that they
-                can develop a shared protocol to refer to a target image among a set of candidates. Such shared
-                protocol, induced in a self-supervised way, can to some extent be used to communicate about previously
-                unseen object categories, as well as to make more granular distinctions compared to the categories
-                taught to the original networks. Contradicting a common view in multi-agent emergent communication
-                research, we find that imposing a discrete bottleneck on communication hampers the emergence of a
-                general code. Moreover, we show that a new neural network can learn the shared protocol developed in a
-                community with remarkable ease, and the process of integrating a new agent into a community more stably
-                succeeds when the original community includes a larger set of heterogeneous networks. Finally, we
-                illustrate the independent benefits of developing a shared communication layer by using it to directly
-                transfer an object classifier from a network to another, and we qualitatively and quantitatively study
-                its emergent properties.</p>
-              <h3>Setup</h3>
-              <!-- Add your setup information here -->
-              <h3>Results</h3>
-              <!-- Add your results here -->
+              <p>Visual networks can be made to find a referential system to communicate about images. They can come up
+                with communication protocoles
+                that work accross diverse populations, with different architectures, sizes, or training methods. By
+                analysing these protocols we find
+                that they generalise to unseen image categories and can be learnt by new agents. The communication
+                protocols are stable to a variety of
+                low level (pixel, colours...) attacks, pointing at the use of more high level categories, though they
+                differ widely from the ones humans
+                would use.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <h2 class="text-center">Language Model to Language model communication for cooperation</h2>
+          <p>ongoing work, but feel free to contact me with questions and ideas!</p>
+          <div class="row justify-content-center">
+            <div class="col-md-8">
+              <h3>Abstract</h3>
+              <p>
+                (WIP) Referential Lewis game style communication is the go-to in emergent communication research. We aim
+                to scale this up by working not
+                on a purely referential system, but on goal based interactions. In our initial setup, two large language
+                models take part in a multi-turn
+                conversation to answer a question which neither could answer individually. While communication itself
+                remains largely unsupervised,
+                we reward both agents for goal success. We expect that a more complex communication setting will push
+                the emergence of language properties
+                for now lacking from emergent communication and large language models.
+              </p>
             </div>
           </div>
         </div>
