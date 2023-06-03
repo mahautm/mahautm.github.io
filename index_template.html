@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>My Academic Profile</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.7.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f8f8;
+            color: #333333;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            padding-top: 50px;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-weight: bold;
+        }
+
+        .nav-tabs .nav-link {
+            border: none;
+            background-color: transparent;
+            color: #333333;
+        }
+
+        .nav-tabs .nav-link:hover {
+            color: #007bff;
+        }
+
+        .profile-section {
+            margin-bottom: 30px;
+        }
+
+        .profile-picture {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-info {
+            margin-top: 20px;
+        }
+
+        .contact-icons i {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+
+        .project-item,
+        .publication-item {
+            margin-bottom: 20px;
+        }
+
+        footer {
+            padding: 20px 0;
+            background-color: #f8f8f8;
+            text-align: center;
+        }
+
+        .social-icons a {
+            color: #333333;
+            margin-right: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #007bff;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container text-center">
+            <h1>My Academic Profile</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 profile-section">
+                <div class="text-center">
+                    <img src="your_picture.jpg" alt="Profile Picture" class="profile-picture">
+                </div>
+                <div class="profile-info">
+                    <h2>John Doe</h2>
+                    <p>Ph.D. Candidate, Computer Science</p>
+                    <div class="contact-icons">
+                        <a href="https://github.com/" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://scholar.google.com/" target="_blank"><i class="fab fa-google"></i></a>
+                        <a href="mailto:john.doe@example.com"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#projects">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#publications">Publications</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="projects">
+                        <div class="project-item">
+                            <h3>Project 1</h3>
+                            <p>Description of Project 1.</p>
+                        </div>
+                        <div class="project-item">
+                            <h3>Project 2</h3>
+                            <p>Description of Project 2.</p>
+                        </div>
+                        <!-- Add more project items as needed -->
+                    </div>
+                    <div class="tab-pane fade" id="publications">
+                        <div class="publication-item">
+                            <h3>Publication 1</h3>
+                            <p>Description of Publication 1.</p>
+                        </div>
+                        <div class="publication-item">
+                            <h3>Publication 2</h3>
+                            <p>Description of Publication 2.</p>
+                        </div>
+                        <!-- Add more publication items as needed -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 John Doe. All rights reserved.</p>
+            <div class="social-icons">
+                <a href="https://github.com/" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://scholar.google.com/" target="_blank"><i class="fab fa-google"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.7.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
