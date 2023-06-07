@@ -5,16 +5,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Your Website</title>
-  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
   <style>
     /* CSS styles for the website */
     body {
-      font-family: 'Rubik', sans-serif;
+      font-family: 'Quicksand', sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #fce8e6;
-      /* Pastel red background color */
-      color: #333;
+      background-color: #fff;
+      /* White background */
     }
 
     header {
@@ -30,10 +30,9 @@
     .menu {
       list-style: none;
       margin: 0;
-      padding: 0;
+      padding: 20px;
       display: flex;
       justify-content: space-between;
-      padding: 20px;
     }
 
     .menu li {
@@ -49,105 +48,15 @@
       padding: 20px;
     }
 
-    h1,
-    h2,
-    h3 {
-      color: #333;
-    }
-
-    #home {
+    section {
       text-align: center;
-    }
-
-    #home img {
-      border-radius: 50%;
-      width: 200px;
-      height: 200px;
-      margin-bottom: 20px;
-    }
-
-    .link-tree {
-      margin-top: 20px;
-    }
-
-    .link-tree a {
-      display: block;
-      margin-bottom: 10px;
-      color: #333;
-      text-decoration: none;
-    }
-
-    #projects {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .project {
-      width: 100%;
-      max-width: 300px;
-      margin: 20px;
       padding: 20px;
-      background-color: #fff;
-      /* White project background */
-      border-radius: 5px;
-      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-      /* Light box shadow */
+      transition: color 0.3s;
     }
 
-    .project img {
-      width: 100%;
-      height: auto;
-      margin-bottom: 10px;
-    }
-
-    #publications {
-      margin-top: 20px;
-    }
-
-    .publication {
-      margin-bottom: 20px;
-    }
-
-    .publication h3 {
-      margin-bottom: 10px;
-    }
-
-    .publication ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .publication ul li {
-      margin-bottom: 5px;
-    }
-
-    .publication ul li a {
-      color: #333;
-      text-decoration: none;
-    }
-
-    footer {
-      background-color: #fff;
-      padding: 20px;
-    }
-
-    .connexionist-images {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .connexionist-images a {
-      margin-right: 10px;
-    }
-
-    .connexionist-images img {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
+    section:hover {
+      color: #fff;
+      /* Text color on hover */
     }
 
     /* Media queries for responsiveness */
@@ -163,44 +72,27 @@
       .menu li a {
         display: block;
       }
-
-      .project {
-        width: 100%;
-        max-width: none;
-      }
-    }
-
-    /* CSS styles for scrolling effects */
-    section {
-      opacity: 0;
-      transition: opacity 0.5s;
-    }
-
-    section.active {
-      opacity: 1;
     }
   </style>
   <script>
-    // JavaScript code for scrolling effects
+    // JavaScript code for mouse overlay effect
     window.addEventListener('DOMContentLoaded', () => {
       const sections = document.querySelectorAll('section');
-      const options = {
-        threshold: 0.5 // Change this value to adjust the trigger point
-      };
 
-      const sectionObserver = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('active');
-          } else {
-            entry.target.classList.remove('active');
-          }
+      sections.forEach((section, index) => {
+        section.addEventListener('mouseover', () => {
+          section.style.color = getPastelRainbowColor(index);
         });
-      }, options);
 
-      sections.forEach(section => {
-        sectionObserver.observe(section);
+        section.addEventListener('mouseout', () => {
+          section.style.color = '#333'; // Reset text color
+        });
       });
+
+      function getPastelRainbowColor(index) {
+        const hue = (index * 30) % 360;
+        return `hsl(${hue}, 70%, 60%)`;
+      }
     });
   </script>
 </head>
@@ -218,7 +110,7 @@
 
   <main>
     <!-- Home page -->
-    <section id="home">
+    <section>
       <h1>Welcome to Your Website</h1>
       <div>
         <img src="profile-picture.jpg" alt="Profile Picture">
@@ -226,16 +118,16 @@
           <!-- Add your introduction paragraph here -->
         </p>
         <div class="link-tree">
-          <a href="https://scholar.example.com">Scholar</a>
-          <a href="https://github.com/yourusername">GitHub</a>
-          <a href="mailto:youremail@example.com">Email</a>
-          <a href="https://linkedin.com/yourprofile">LinkedIn</a>
+          <a href="https://scholar.example.com"><i class="fab fa-google"></i></a>
+          <a href="https://github.com/yourusername"><i class="fab fa-github"></i></a>
+          <a href="mailto:youremail@example.com"><i class="fas fa-envelope"></i></a>
+          <a href="https://linkedin.com/yourprofile"><i class="fab fa-linkedin"></i></a>
         </div>
       </div>
     </section>
 
     <!-- Projects page -->
-    <section id="projects">
+    <section>
       <h2>Projects</h2>
       <div class="project">
         <img src="project-image.jpg" alt="Project Image">
@@ -247,27 +139,19 @@
     </section>
 
     <!-- Publications page -->
-    <section id="publications">
+    <section>
       <h2>Publications</h2>
       <div class="publication">
         <h3>Publication Title</h3>
         <ul>
-          <li><a href="https://arxiv.org/123">ArXiv</a></li>
-          <li><a href="https://github.com/yourusername/publication">GitHub</a></li>
-          <li><a href="https://yourwebsite.com/poster.pdf">Poster</a></li>
+          <li><a href="https://arxiv.org/123"><i class="fas fa-file-alt"></i> ArXiv</a></li>
+          <li><a href="https://github.com/yourusername/publication"><i class="fab fa-github"></i> GitHub</a></li>
+          <li><a href="https://yourwebsite.com/poster.pdf"><i class="fas fa-image"></i> Poster</a></li>
         </ul>
       </div>
       <!-- Add more publication divs as needed -->
     </section>
   </main>
-
-  <footer>
-    <div class="connexionist-images">
-      <a href="#"><img src="connexionist-image1.png" alt="Connexionist Image 1"></a>
-      <a href="#"><img src="connexionist-image2.png" alt="Connexionist Image 2"></a>
-      <!-- Add more connexionist images as needed -->
-    </div>
-  </footer>
 </body>
 
 </html>
