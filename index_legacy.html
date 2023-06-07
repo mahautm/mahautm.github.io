@@ -15,6 +15,7 @@
       padding: 0;
       background-color: #fff;
       /* White background */
+      color: #333;
     }
 
     header {
@@ -72,25 +73,29 @@
       .menu li a {
         display: block;
       }
+
+      section {
+        padding: 10px;
+      }
     }
   </style>
   <script>
     // JavaScript code for mouse overlay effect
     window.addEventListener('DOMContentLoaded', () => {
-      const sections = document.querySelectorAll('section');
+      const headers = document.querySelectorAll('section h2, section h3');
 
-      sections.forEach((section, index) => {
-        section.addEventListener('mouseover', () => {
-          section.style.color = getPastelRainbowColor(index);
+      headers.forEach((header) => {
+        header.addEventListener('mouseover', () => {
+          header.style.color = getRandomPastelColor();
         });
 
-        section.addEventListener('mouseout', () => {
-          section.style.color = '#333'; // Reset text color
+        header.addEventListener('mouseout', () => {
+          header.style.color = '#333'; // Reset text color
         });
       });
 
-      function getPastelRainbowColor(index) {
-        const hue = (index * 30) % 360;
+      function getRandomPastelColor() {
+        const hue = Math.floor(Math.random() * 360);
         return `hsl(${hue}, 70%, 60%)`;
       }
     });
