@@ -83,16 +83,16 @@
   <script>
     // JavaScript code for mouse overlay effect
     window.addEventListener('DOMContentLoaded', () => {
-      const headers = document.querySelectorAll('section h2, section h3');
+      const headers = document.querySelectorAll('section h1, section h2, section h3');
 
       headers.forEach((header) => {
         header.addEventListener('mouseover', () => {
           header.style.color = getRandomPastelColor();
         });
 
-        header.addEventListener('mouseout', () => {
-          header.style.color = '#333'; // Reset text color
-        });
+        // header.addEventListener('mouseout', () => {
+        //   header.style.color = '#333'; // Reset text color
+        // });
       });
 
       function getRandomPastelColor() {
@@ -117,7 +117,7 @@
   <main>
     <!-- Home page -->
     <section>
-      <h1>Welcome to Your Website</h1>
+      <h1>Matéo Mahaut</h1>
       <div>
         <img src="pp.jpg" alt="Profile Picture" class="profile-picture">
         <p>
