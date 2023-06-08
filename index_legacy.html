@@ -83,7 +83,7 @@
   <script>
     // JavaScript code for mouse overlay effect
     window.addEventListener('DOMContentLoaded', () => {
-      const headers = document.querySelectorAll('section h1, section h2, section h3');
+      const headers = document.querySelectorAll('section h1, section h2');
 
       headers.forEach((header) => {
         header.addEventListener('mouseover', () => {
@@ -147,9 +147,17 @@
     <section>
       <h2>Projects</h2>
       <div class="project">
-        <img src="project-image.jpg" alt="Project Image">
+        <img src="llm2llm.png" alt="Project Image">
+        <h3>Language Model to Language model communication for cooperation</h3>
+        <p>ongoing work, feel free to contact me with questions and ideas!</p>
         <p>
-          <!-- Add a short description of your project -->
+          (WIP) Referential Lewis game style communication is the go-to in emergent communication
+          research. We aim to scale this up by working not on a purely referential system, but on goal based
+          interactions. In our initial setup,
+          two large language models take part in a multi-turn conversation to answer a question which neither could
+          answer individually. While communication itself remains largely unsupervised, we reward both agents for goal
+          success. We expect that a more complex communication setting will push the emergence of language properties
+          for now lacking from emergent communication and large language models.
         </p>
       </div>
       <!-- Add more project divs as needed -->
