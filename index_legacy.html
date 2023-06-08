@@ -28,6 +28,12 @@
       z-index: 999;
     }
 
+    .profile-picture {
+      width: 150px;
+      border-radius: 50%;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
     .menu {
       list-style: none;
       margin: 0;
@@ -50,14 +56,9 @@
     }
 
     section {
-      text-align: center;
+      /* text-align: center; */
       padding: 20px;
       transition: color 0.3s;
-    }
-
-    section:hover {
-      color: #fff;
-      /* Text color on hover */
     }
 
     /* Media queries for responsiveness */
@@ -118,7 +119,7 @@
     <section>
       <h1>Welcome to Your Website</h1>
       <div>
-        <img src="pp.jpg" alt="Profile Picture">
+        <img src="pp.jpg" alt="Profile Picture" class="profile-picture">
         <p>
           I'm Matéo, a second year PhD student in the COLT group at Universitat Pompeu Fabra
           under
@@ -160,30 +161,29 @@
       <div class="publication">
         <h3>Referential communication in heterogeneous communities of pre-trained visual deep networks</h3>
         <ul>
-          <li>Mahaut, M., Franzon, F., Dessì, R., & Baroni, M. (2023). Referential communication
+          <p>Mahaut, M., Franzon, F., Dessì, R., & Baroni, M. (2023). Referential communication
             in heterogeneous
             communities of pre-trained visual deep networks. arXiv preprint arXiv:2302.08913.
-          </li>
-          <li><a href="https://arxiv.org/2302.08913"><i class="fas fa-file-alt"></i> ArXiv</a></li>
-          <li><a href="https://github.com/mahautm/EGG/tree/main/egg/zoo/pop"><i class="fab fa-github"></i> GitHub</a>
-          </li>
-          <li><a href="poster_aamas_2023_4.pdf"><i class="fas fa-image"></i> Poster</a></li>
+          </p>
+          <a href="https://arxiv.org/2302.08913"><i class="fas fa-file-alt"></i> ArXiv</a>
+          <a href="https://github.com/mahautm/EGG/tree/main/egg/zoo/pop"><i class="fab fa-github"></i> GitHub</a>
+          <a href="poster_aamas_2023_4.pdf"><i class="fas fa-image"></i> Poster</a>
         </ul>
       </div>
       <div class="publication">
         <h3>Social network structure shapes innovation: experience-sharing in RL with SAPIENS</h3>
-        <li>Nisioti, E., Mahaut, M., Oudeyer, P. Y., Momennejad, I., & Moulin-Frier, C. (2022).
+        <p>Nisioti, E., Mahaut, M., Oudeyer, P. Y., Momennejad, I., & Moulin-Frier, C. (2022).
           Social network structure shapes innovation: experience-sharing in RL with SAPIENS. arXiv preprint
           arXiv:2206.05060.
-        </li>
-        <li><a href="https://arxiv.org/2206.05060"><i class="fas fa-file-alt"></i> ArXiv</a></li>
+        </p>
+        <a href="https://arxiv.org/2206.05060"><i class="fas fa-file-alt"></i> ArXiv</a>
       </div>
       <div class="publication">
         <h3>Team performance analysis of a collaborative spatial orientation mission in Mars analogue environment</h3>
-        <li>Prebot, B., Cavel, C., Calice, L., Mahaut, M., Leduque, A., & Salotti, J. M. (2019,
+        <p>Prebot, B., Cavel, C., Calice, L., Mahaut, M., Leduque, A., & Salotti, J. M. (2019,
           October). Team performance analysis of a collaborative spatial orientation mission in Mars analogue
           environment. In
-          70th International Astronautical Congress (p. 7).</li>
+          70th International Astronautical Congress (p. 7).</p>
       </div>
       <!-- Add more publication divs as needed -->
     </section>
