@@ -102,15 +102,17 @@
             }
 
             function handleScroll() {
-                headers.forEach((header) => {
+                const scrollPosition = window.scrollY;
+                headers.forEach((header, index) => {
                     if (isElementInViewport(header)) {
-                        header.style.color = getRandomPastelColor();
+                        const colorIndex = Math.floor((scrollPosition / 500) + index) % numColors;
+                        header.style.color = getPastelColor(colorIndex);
                     }
                 });
             }
 
-            function getRandomPastelColor() {
-                const hue = Math.floor(Math.random() * 360);
+            function getPastelColor(index) {
+                const hue = (index * (360 / numColors)) % 360;
                 return `hsl(${hue}, 70%, 60%)`;
             }
 
@@ -119,7 +121,50 @@
 
             // Listen for scroll events
             window.addEventListener('scroll', handleScroll);
+
+            // JavaScript code for smooth scrolling on menu click
+            const menuLinks = document.querySelectorAll('.menu a[href^="#"]');
+
+            function smoothScroll(target) {
+                const offset = 50; // Offset for scroll position
+                const duration = 800; // Scroll animation duration
+                const targetPosition = target.offsetTop - offset;
+                const startPosition = window.pageYOffset;
+                const distance = targetPosition - startPosition;
+                let startTime = null;
+
+                function animation(currentTime) {
+                    if (startTime === null) startTime = currentTime;
+                    const timeElapsed = currentTime - startTime;
+                    const scrollY = easeInOutCubic(timeElapsed, startPosition, distance, duration);
+                    window.scrollTo(0, scrollY);
+                    if (timeElapsed < duration) requestAnimationFrame(animation);
+                }
+
+                // Easing function for smooth scrolling
+                function easeInOutCubic(t, b, c, d) {
+                    t /= d / 2;
+                    if (t < 1) return c / 2 * t * t * t + b;
+                    t -= 2;
+                    return c / 2 * (t * t * t + 2) + b;
+                }
+
+                requestAnimationFrame(animation);
+            }
+
+            // Add click event listener to menu links
+            menuLinks.forEach((link) => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const target = document.querySelector(link.getAttribute('href'));
+                    if (target) {
+                        smoothScroll(target);
+                    }
+                });
+            });
         });
+
+
 
     </script>
 </head>
@@ -169,12 +214,12 @@
             <!-- make a list of news -->
 
             <ul>
-                <li>July 14th 2023- I am going to the 2023 Lisbon Machine Learning Summer School.</li>
-                <li>July 1st 2023- We are organising the second edition of the <a
+                <li>July 14th 2023 - I am going to the 2023 Lisbon Machine Learning Summer School.</li>
+                <li>July 1st 2023 - We are organising the second edition of the <a
                         href="https://sites.google.com/view/rest-cl-2023/">Rest-CL PhD retreat!</a></li>
-                <li>June 31st 2023- I presented the extended abstract version of our referential communication paper at
+                <li>June 31st 2023 - I presented the extended abstract version of our referential communication paper at
                     AAMAS 2023.</li>
-                <li>April 11th 2022- I am co-organising the <a href="https://sites.google.com/view/rest-cl/">Rest-CL
+                <li>April 11th 2022 - I am co-organising the <a href="https://sites.google.com/view/rest-cl/">Rest-CL
                         PhD retreat</a> with COLT and DMG-UvA PhDs.</li>
             </ul>
         </section>
