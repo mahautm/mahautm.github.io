@@ -87,25 +87,40 @@
         }
     </style>
     <script>
-        // JavaScript code for mouse overlay effect
+        // JavaScript code for pastel colors on scroll
         window.addEventListener('DOMContentLoaded', () => {
-            const headers = document.querySelectorAll('section h1, section h2');
+            const headers = document.querySelectorAll('section h2, section h3');
 
-            headers.forEach((header) => {
-                header.addEventListener('mouseover', () => {
-                    header.style.color = getRandomPastelColor();
+            function isElementInViewport(element) {
+                const rect = element.getBoundingClientRect();
+                return (
+                    rect.top >= 0 &&
+                    rect.left >= 0 &&
+                    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+                );
+            }
+
+            function handleScroll() {
+                headers.forEach((header) => {
+                    if (isElementInViewport(header)) {
+                        header.style.color = getRandomPastelColor();
+                    }
                 });
-
-                // header.addEventListener('mouseout', () => {
-                //   header.style.color = '#333'; // Reset text color
-                // });
-            });
+            }
 
             function getRandomPastelColor() {
                 const hue = Math.floor(Math.random() * 360);
                 return `hsl(${hue}, 70%, 60%)`;
             }
+
+            // Initial check on page load
+            handleScroll();
+
+            // Listen for scroll events
+            window.addEventListener('scroll', handleScroll);
         });
+
     </script>
 </head>
 
@@ -160,7 +175,7 @@
                 <li>June 31st 2023- I presented the extended abstract version of our referential communication paper at
                     AAMAS 2023.</li>
                 <li>April 11th 2022- I am co-organising the <a href="https://sites.google.com/view/rest-cl/">Rest-CL
-                        PhD retreat</a> the COLT and DMG-UvA PhDs.</li>
+                        PhD retreat</a> with COLT and DMG-UvA PhDs.</li>
             </ul>
         </section>
         <!-- Projects page -->
@@ -181,6 +196,22 @@
                     success. We expect that a more complex communication setting will push the emergence of language
                     properties
                     for now lacking from emergent communication and large language models.
+                </p>
+            </div>
+            <div class="project">
+                <h3>Referential communication in pre-trained populations</h3>
+                <img src="llm2llm.png" alt="Project Image" , class="project-image">
+                <a href="#publications"><i class="fas fa-file-alt"></i> ArXiv</a>
+                <p>
+                    This project looked at whether very different state of the art foundation models could build a
+                    common language for referential communication.
+                    Our results show that a common representation can very rapidly emerge, and that those protocols can
+                    generalise in a variety of ways. They can
+                    communicate about unseen objects, resist to a variety of perturbations, and even manage some
+                    discrimination between objects they were trained to see as belonging to the same class. While this
+                    project is being reviewed (you can find the preprint on <a href="https://arxiv.org/abs/2302.08913">
+                        ArXiv</a>), we are working on additional
+                    analysis of the communication protocols, and considering other extensions :).
                 </p>
             </div>
             <!-- Add more project divs as needed -->
