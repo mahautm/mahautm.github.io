@@ -122,46 +122,46 @@
             // Listen for scroll events
             window.addEventListener('scroll', handleScroll);
 
-            // JavaScript code for smooth scrolling on menu click
-            const menuLinks = document.querySelectorAll('.menu a[href^="#"]');
+            // // JavaScript code for smooth scrolling on menu click
+            // const menuLinks = document.querySelectorAll('.menu a[href^="#"]');
 
-            function smoothScroll(target) {
-                const offset = 50; // Offset for scroll position
-                const duration = 800; // Scroll animation duration
-                const targetPosition = target.offsetTop - offset;
-                const startPosition = window.pageYOffset;
-                const distance = targetPosition - startPosition;
-                let startTime = null;
+            // function smoothScroll(target) {
+            //     const offset = 50; // Offset for scroll position
+            //     const duration = 800; // Scroll animation duration
+            //     const targetPosition = target.offsetTop - offset;
+            //     const startPosition = window.pageYOffset;
+            //     const distance = targetPosition - startPosition;
+            //     let startTime = null;
 
-                function animation(currentTime) {
-                    if (startTime === null) startTime = currentTime;
-                    const timeElapsed = currentTime - startTime;
-                    const scrollY = easeInOutCubic(timeElapsed, startPosition, distance, duration);
-                    window.scrollTo(0, scrollY);
-                    if (timeElapsed < duration) requestAnimationFrame(animation);
-                }
+            //     function animation(currentTime) {
+            //         if (startTime === null) startTime = currentTime;
+            //         const timeElapsed = currentTime - startTime;
+            //         const scrollY = easeInOutCubic(timeElapsed, startPosition, distance, duration);
+            //         window.scrollTo(0, scrollY);
+            //         if (timeElapsed < duration) requestAnimationFrame(animation);
+            //     }
 
-                // Easing function for smooth scrolling
-                function easeInOutCubic(t, b, c, d) {
-                    t /= d / 2;
-                    if (t < 1) return c / 2 * t * t * t + b;
-                    t -= 2;
-                    return c / 2 * (t * t * t + 2) + b;
-                }
+            //     // Easing function for smooth scrolling
+            //     function easeInOutCubic(t, b, c, d) {
+            //         t /= d / 2;
+            //         if (t < 1) return c / 2 * t * t * t + b;
+            //         t -= 2;
+            //         return c / 2 * (t * t * t + 2) + b;
+            //     }
 
-                requestAnimationFrame(animation);
-            }
+            //     requestAnimationFrame(animation);
+            // }
 
-            // Add click event listener to menu links
-            menuLinks.forEach((link) => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const target = document.querySelector(link.getAttribute('href'));
-                    if (target) {
-                        smoothScroll(target);
-                    }
-                });
-            });
+            // // Add click event listener to menu links
+            // menuLinks.forEach((link) => {
+            //     link.addEventListener('click', (e) => {
+            //         e.preventDefault();
+            //         const target = document.querySelector(link.getAttribute('href'));
+            //         if (target) {
+            //             smoothScroll(target);
+            //         }
+            //     });
+            // });
         });
 
 
@@ -246,7 +246,6 @@
             <div class="project">
                 <h3>Referential communication in pre-trained populations</h3>
                 <img src="emecompop.png" alt="Project Image" , class="project-image">
-                <a href="#publications"><i class="fas fa-file-alt"></i> ArXiv</a>
                 <p>
                     This project looked at whether very different state of the art foundation models could build a
                     common language for referential communication.
