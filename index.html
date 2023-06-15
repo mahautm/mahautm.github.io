@@ -106,7 +106,7 @@
             function handleScroll() {
                 const scrollPosition = window.scrollY;
                 headers.forEach((header, index) => {
-                    const colorIndex = Math.floor((scrollPosition / 500)) % numColors;
+                    const colorIndex = Math.floor((scrollPosition / 500));
                     header.style.color = getPastelColor(colorIndex);
                 });
             }
