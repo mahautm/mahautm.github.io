@@ -89,27 +89,25 @@
     <script>
         // JavaScript code for pastel colors on scroll
         window.addEventListener('DOMContentLoaded', () => {
-            const headers = document.querySelectorAll('section h2, section h3');
+            const headers = document.querySelectorAll('section h1, section h2, section h3');
             const numColors = 10; // Number of pastel colors to use
             // let prevColorIndex = 0;
 
-            function isElementInViewport(element) {
-                const rect = element.getBoundingClientRect();
-                return (
-                    rect.top >= 0 &&
-                    rect.left >= 0 &&
-                    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-                    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-                );
-            }
+            // function isElementInViewport(element) {
+            //     const rect = element.getBoundingClientRect();
+            //     return (
+            //         rect.top >= 0 &&
+            //         rect.left >= 0 &&
+            //         rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            //         rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            //     );
+            // }
 
             function handleScroll() {
                 const scrollPosition = window.scrollY;
                 headers.forEach((header, index) => {
-                    if (isElementInViewport(header)) {
-                        const colorIndex = Math.floor((scrollPosition / 500) + index) % numColors;
-                        header.style.color = getPastelColor(colorIndex);
-                    }
+                    const colorIndex = Math.floor((scrollPosition / 500)) % numColors;
+                    header.style.color = getPastelColor(colorIndex);
                 });
             }
 
