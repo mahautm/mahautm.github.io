@@ -106,7 +106,7 @@
             function handleScroll() {
                 const scrollPosition = window.scrollY;
                 headers.forEach((header, index) => {
-                    const colorIndex = Math.floor((scrollPosition / 500));
+                    const colorIndex = Math.floor((scrollPosition / 500)) % numColors;
                     header.style.color = getPastelColor(colorIndex);
                 });
             }
@@ -214,6 +214,7 @@
             <!-- make a list of news -->
 
             <ul>
+                <li>September 18th 2023 - I am doing a 4 months internship in the NLP group @ AWS.</li>
                 <li>July 14th 2023 - I am going to the 2023 Lisbon Machine Learning Summer School.</li>
                 <li>July 1st 2023 - We are organising the second edition of the <a
                         href="https://sites.google.com/view/rest-cl-2023/">Rest-CL PhD retreat!</a></li>
