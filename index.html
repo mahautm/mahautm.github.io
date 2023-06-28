@@ -106,8 +106,10 @@
             function handleScroll() {
                 const scrollPosition = window.scrollY;
                 headers.forEach((header, index) => {
-                    const colorIndex = Math.floor((scrollPosition / 500)) % numColors;
-                    header.style.color = getPastelColor(colorIndex);
+                    if (isElementInViewport(header)) {
+                        const colorIndex = Math.floor((scrollPosition / 500) + index) % numColors;
+                        header.style.color = getPastelColor(colorIndex);
+                    }
                 });
             }
 
@@ -123,45 +125,45 @@
             window.addEventListener('scroll', handleScroll);
 
             // // JavaScript code for smooth scrolling on menu click
-            // const menuLinks = document.querySelectorAll('.menu a[href^="#"]');
+            const menuLinks = document.querySelectorAll('.menu a[href^="#"]');
 
-            // function smoothScroll(target) {
-            //     const offset = 50; // Offset for scroll position
-            //     const duration = 800; // Scroll animation duration
-            //     const targetPosition = target.offsetTop - offset;
-            //     const startPosition = window.pageYOffset;
-            //     const distance = targetPosition - startPosition;
-            //     let startTime = null;
+            function smoothScroll(target) {
+                const offset = 50; // Offset for scroll position
+                const duration = 800; // Scroll animation duration
+                const targetPosition = target.offsetTop - offset;
+                const startPosition = window.pageYOffset;
+                const distance = targetPosition - startPosition;
+                let startTime = null;
 
-            //     function animation(currentTime) {
-            //         if (startTime === null) startTime = currentTime;
-            //         const timeElapsed = currentTime - startTime;
-            //         const scrollY = easeInOutCubic(timeElapsed, startPosition, distance, duration);
-            //         window.scrollTo(0, scrollY);
-            //         if (timeElapsed < duration) requestAnimationFrame(animation);
-            //     }
+                function animation(currentTime) {
+                    if (startTime === null) startTime = currentTime;
+                    const timeElapsed = currentTime - startTime;
+                    const scrollY = easeInOutCubic(timeElapsed, startPosition, distance, duration);
+                    window.scrollTo(0, scrollY);
+                    if (timeElapsed < duration) requestAnimationFrame(animation);
+                }
 
-            //     // Easing function for smooth scrolling
-            //     function easeInOutCubic(t, b, c, d) {
-            //         t /= d / 2;
-            //         if (t < 1) return c / 2 * t * t * t + b;
-            //         t -= 2;
-            //         return c / 2 * (t * t * t + 2) + b;
-            //     }
+                // Easing function for smooth scrolling
+                function easeInOutCubic(t, b, c, d) {
+                    t /= d / 2;
+                    if (t < 1) return c / 2 * t * t * t + b;
+                    t -= 2;
+                    return c / 2 * (t * t * t + 2) + b;
+                }
 
-            //     requestAnimationFrame(animation);
-            // }
+                requestAnimationFrame(animation);
+            }
 
-            // // Add click event listener to menu links
-            // menuLinks.forEach((link) => {
-            //     link.addEventListener('click', (e) => {
-            //         e.preventDefault();
-            //         const target = document.querySelector(link.getAttribute('href'));
-            //         if (target) {
-            //             smoothScroll(target);
-            //         }
-            //     });
-            // });
+            // Add click event listener to menu links
+            menuLinks.forEach((link) => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const target = document.querySelector(link.getAttribute('href'));
+                    if (target) {
+                        smoothScroll(target);
+                    }
+                });
+            });
         });
 
 
@@ -174,6 +176,7 @@
         <nav>
             <ul class="menu">
                 <li><a href="#home">Home</a></li>
+                <li><a href="#news">Home</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#publications">Publications</a></li>
             </ul>
@@ -182,7 +185,7 @@
 
     <main>
         <!-- Home page -->
-        <section>
+        <section id="home">
             <h1>Matéo Mahaut</h1>
             <div>
                 <img src="pp.jpg" alt="Profile Picture" class="profile-picture">
@@ -209,7 +212,7 @@
                 </div>
             </div>
         </section>
-        <section>
+        <section id="news">
             <h2>News</h2>
             <!-- make a list of news -->
 
@@ -225,7 +228,7 @@
             </ul>
         </section>
         <!-- Projects page -->
-        <section>
+        <section id="projects">
             <h2>Projects</h2>
             <div class="project">
                 <h3>Language Model to Language model communication for cooperation</h3>
@@ -263,7 +266,8 @@
         </section>
 
         <!-- Publications page -->
-        <section>
+        <!-- href called publications for menu to get here-->
+        <section id="publications">
             <h2>Publications</h2>
             <div class="publication">
                 <h3>Referential communication in heterogeneous communities of pre-trained visual deep networks</h3>
