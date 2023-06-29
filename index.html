@@ -106,10 +106,8 @@
             function handleScroll() {
                 const scrollPosition = window.scrollY;
                 headers.forEach((header, index) => {
-                    if (isElementInViewport(header)) {
-                        const colorIndex = Math.floor((scrollPosition / 500) + index) % numColors;
-                        header.style.color = getPastelColor(colorIndex);
-                    }
+                    const colorIndex = Math.floor((scrollPosition / 500) + index) % numColors;
+                    header.style.color = getPastelColor(colorIndex);
                 });
             }
 
@@ -176,7 +174,7 @@
         <nav>
             <ul class="menu">
                 <li><a href="#home">Home</a></li>
-                <li><a href="#news">Home</a></li>
+                <li><a href="#news">News</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#publications">Publications</a></li>
             </ul>
@@ -217,7 +215,7 @@
             <!-- make a list of news -->
 
             <ul>
-                <li>September 18th 2023 - I am doing a 4 months internship in the NLP group @ AWS.</li>
+                <li>September 18th 2023 - I am doing a 4 months internship in the NLP group @ AWS Barcelona.</li>
                 <li>July 14th 2023 - I am going to the 2023 Lisbon Machine Learning Summer School.</li>
                 <li>July 1st 2023 - We are organising the second edition of the <a
                         href="https://sites.google.com/view/rest-cl-2023/">Rest-CL PhD retreat!</a></li>
