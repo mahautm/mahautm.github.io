@@ -93,7 +93,7 @@
             const numColors = 35; // Number of pastel colors to use
 
             function handleScroll() {
-                const scrollPosition = window.scrollY * 1.5;
+                const scrollPosition = window.scrollY * 5;
                 headers.forEach((header, index) => {
                     const colorIndex = Math.floor((scrollPosition / 500) + index) % numColors;
                     header.style.color = getPastelColor(colorIndex);
