@@ -8,21 +8,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <style>
-        /* CSS styles for the website */
         body {
             font-family: 'Quicksand', sans-serif;
             margin: 0;
             padding: 0;
             background-color: #fff;
-            /* White background */
             color: #333;
         }
 
         header {
             background-color: #fff;
-            /* White menu bar background */
             border-bottom: 1px solid #f5f5f5;
-            /* Light border */
             position: sticky;
             top: 0;
             z-index: 999;
@@ -32,12 +28,24 @@
             width: 150px;
             border-radius: 50%;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .profile-picture:hover {
+            transform: scale(1.05) rotate(-2deg);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
         }
 
         .project-image {
             width: 500px;
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .project-image:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
         }
 
         .menu {
@@ -52,9 +60,23 @@
             margin-right: 20px;
         }
 
+        .menu li:last-child {
+            margin-right: 0;
+        }
+
         .menu li a {
             color: #333;
             text-decoration: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+        }
+
+        .menu li a:hover,
+        .menu li a:focus {
+            background: #f0f0f0;
+            color: #0077cc;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
         }
 
         main {
@@ -62,9 +84,59 @@
         }
 
         section {
-            /* text-align: center; */
             padding: 20px;
             transition: color 0.3s;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.7s cubic-bezier(.4, 0, .2, 1), transform 0.7s cubic-bezier(.4, 0, .2, 1);
+            will-change: opacity, transform;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .link-tree a {
+            margin-right: 10px;
+            color: #333;
+            font-size: 1.3em;
+            transition: color 0.2s, transform 0.2s;
+            display: inline-block;
+        }
+
+        .link-tree a:hover {
+            color: #0077cc;
+            transform: scale(1.15) rotate(-8deg);
+        }
+
+        .publication a,
+        .project a {
+            color: #0077cc;
+            text-decoration: none;
+            margin-right: 10px;
+            transition: color 0.2s, text-decoration 0.2s;
+        }
+
+        .publication a:hover,
+        .project a:hover {
+            color: #005999;
+            text-decoration: underline;
+        }
+
+        .project,
+        .teaching,
+        .publication {
+            transition: box-shadow 0.3s, transform 0.3s;
+            border-radius: 8px;
+            padding: 12px 16px;
+        }
+
+        .project:hover,
+        .teaching:hover,
+        .publication:hover {
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+            transform: translateY(-4px) scale(1.01);
         }
 
         /* Media queries for responsiveness */
@@ -111,12 +183,12 @@
             // Listen for scroll events
             window.addEventListener('scroll', handleScroll);
 
-            // // JavaScript code for smooth scrolling on menu click
+            // Smooth scrolling for menu links
             const menuLinks = document.querySelectorAll('.menu a[href^="#"]');
 
             function smoothScroll(target) {
-                const offset = 50; // Offset for scroll position
-                const duration = 800; // Scroll animation duration
+                const offset = 50;
+                const duration = 800;
                 const targetPosition = target.offsetTop - offset;
                 const startPosition = window.pageYOffset;
                 const distance = targetPosition - startPosition;
@@ -130,7 +202,6 @@
                     if (timeElapsed < duration) requestAnimationFrame(animation);
                 }
 
-                // Easing function for smooth scrolling
                 function easeInOutCubic(t, b, c, d) {
                     t /= d / 2;
                     if (t < 1) return c / 2 * t * t * t + b;
@@ -141,7 +212,6 @@
                 requestAnimationFrame(animation);
             }
 
-            // Add click event listener to menu links
             menuLinks.forEach((link) => {
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
@@ -151,10 +221,22 @@
                     }
                 });
             });
+
+            // Fade-in animation for sections on scroll
+            const sections = document.querySelectorAll('main > section');
+            const revealSections = () => {
+                const triggerBottom = window.innerHeight * 0.92;
+                sections.forEach(section => {
+                    const rect = section.getBoundingClientRect();
+                    if (rect.top < triggerBottom) {
+                        section.classList.add('visible');
+                    }
+                });
+            };
+            // Initial check and on scroll
+            revealSections();
+            window.addEventListener('scroll', revealSections);
         });
-
-
-
     </script>
 </head>
 
@@ -178,18 +260,12 @@
             <div>
                 <img src="pp.jpg" alt="Profile Picture" class="profile-picture">
                 <p>
-                    I'm Matéo, a second year PhD student in the COLT group at Universitat Pompeu Fabra
-                    under
-                    the supervision of Marco Baroni. I'm interested in multi-agent cooperation, and am
-                    looking at it from
-                    the perspective
-                    of communicating foundation models - using emergent communication and multi-agent
-                    reinforcement
-                    learning.
+                    I'm Matéo, a final year PhD student in the COLT group at Universitat Pompeu Fabra
+                    under the supervision of Marco Baroni. I'm interested in multi-agent cooperation,
+                    emergent communication, and interpretability.
                     Before that, I got my engineering diploma at the École Nationale Supérieure de
-                    Cognitique in Bordeaux,
-                    and interned at the
-                    FLOWERS Inria lab, and the Institut de Neurosciences de la Timone in Marseille.
+                    Cognitique in Bordeaux, and interned at the FLOWERS Inria lab, and the Institut
+                    de Neurosciences de la Timone in Marseille.
                 </p>
                 <div class="link-tree">
                     <a href="https://scholar.google.com/citations?hl=fr&user=cFJOy4wAAAAJ"><i
@@ -257,7 +333,7 @@
                     interested in how representation of a sentence will vary depending on fine-tuning.
                 </p>
             </div>
-            <div class="project">
+            <!-- <div class="project">
                 <h3>Language Model to Language model communication for cooperation</h3>
                 <img src="llm2llm.png" alt="Project Image" , class="project-image">
                 <p>Ongoing work, feel free to contact me with questions and ideas!</p>
@@ -273,7 +349,7 @@
                     properties
                     for now lacking from emergent communication and large language models.
                 </p>
-            </div>
+            </div> -->
             <div class="project">
                 <h3>Referential communication in pre-trained populations</h3>
                 <img src="emecompop.png" alt="Project Image" , class="project-image">
@@ -281,12 +357,23 @@
                     This project looked at whether very different state of the art foundation models could build a
                     common language for referential communication.
                     Our results show that a common representation can very rapidly emerge, and that those protocols can
-                    generalise in a variety of ways. They can
-                    communicate about unseen objects, resist to a variety of perturbations, and even manage some
-                    discrimination between objects they were trained to see as belonging to the same class. While this
-                    project is being reviewed (you can find the preprint on <a href="https://arxiv.org/abs/2302.08913">
-                        ArXiv</a>), we are working on additional
-                    analysis of the communication protocols, and considering other extensions :).
+                    generalise in a variety of ways (<a href="https://arxiv.org/abs/2302.08913">Accepted at TMLR</a>).
+
+                    Follow up works include understanding how models build such similar representations throughout the
+                    different layers.
+                </p>
+            </div>
+            <div class="project">
+                <h3>Repetitions in Language Models</h3>
+                <p>
+                    In this project, we investigate the mechanisms behind repetition phenomena in large language models.
+                    Our findings show that not all repetitions are generated by the same underlying processes—distinct
+                    mechanisms can sustain repetition depending on the context and model architecture.
+                    Ongoing works include looking at the apparition of this phenomenon in the training process, and the
+                    mapping of different circuits to different functions.
+                    <br>
+                    <a href="https://arxiv.org/abs/2504.01100">Read the paper: "Repetitions are not all alike: distinct
+                        mechanisms sustain repetition in language models"</a>
                 </p>
             </div>
             <!-- Add more project divs as needed -->
@@ -296,6 +383,12 @@
         <!-- href called publications for menu to get here-->
         <section id="publications">
             <h2>Publications</h2>
+            <div class="publication">
+                <h3>Repetitions are not all alike: distinct mechanisms sustain repetition in language models</h3>
+                <p>Mahaut, M., & Franzon, F. (2025). Repetitions are not all alike: distinct mechanisms sustain
+                    repetition in language models. arXiv preprint arXiv:2504.01100.</p>
+                <a href="https://arxiv.org/abs/2504.01100"><i class="fas fa-file-alt"></i> ArXiv</a>
+            </div>
             <div class="publication">
                 <h3>Factual Confidence of LLMs: on Reliability and Robustness of Current Estimators</h3>
                 <p>Aina, L., Czarnowska, P., Hardalov, M., Müller, T., Màrquez, L. (2024). Factual Confidence of LLMs:
