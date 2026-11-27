@@ -1,0 +1,69 @@
+<!doctype html><html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="jobs"><meta name="theme-color" content="#111">
+<meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer"><title>jobs</title>
+<style>
+:root{--bg:#f6f6f4;--card:#fff;--fg:#1b1b1b;--dim:#777;--line:#e4e4e0;--run:#1f8a4c;--pend:#b7791f;--fail:#c0392b;--done:#2b6cb0;--bar:#1f8a4c}
+@media(prefers-color-scheme:dark){:root{--bg:#121212;--card:#1d1d1d;--fg:#eee;--dim:#999;--line:#2c2c2c;--bar:#3fbf73}}
+*{box-sizing:border-box}body{margin:0;font:15px/1.35 -apple-system,system-ui,sans-serif;background:var(--bg);color:var(--fg);padding:env(safe-area-inset-top) 12px 40px}
+header{position:sticky;top:0;background:var(--bg);display:flex;align-items:center;gap:8px;padding:10px 0;z-index:2}
+h1{font-size:19px;margin:0;flex:1}button{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:8px;padding:5px 11px}
+h2{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--dim);margin:18px 2px 6px}
+.c{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:7px 0}
+.t{display:flex;gap:8px;align-items:baseline}.n{font-weight:600;flex:1;word-break:break-all}
+.s{font-size:12px;font-weight:600}.Running,.alive{color:var(--run)}.Pending{color:var(--pend)}.Failed,.Error{color:var(--fail)}.Succeeded,.exited{color:var(--done)}
+.m{font-size:13px;color:var(--dim);margin-top:2px}.w{margin-top:4px}.eta{font-weight:600}
+.b{height:5px;background:var(--line);border-radius:3px;margin-top:6px;overflow:hidden}.b i{display:block;height:100%;background:var(--bar)}
+.l{font:12px ui-monospace,monospace;color:var(--dim);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.u{border-style:dashed}.err{color:var(--fail);font-weight:600}#st{font-size:12px;color:var(--dim)}
+#on{font-size:12px;font-weight:600}#on.ok{color:var(--run)}#on.off{color:var(--fail)}
+</style></head><body>
+<header><h1>jobs</h1><span id="on"></span><span id="st"></span><button onclick="load(1)">&#8635;</button></header>
+<div id="out">loading...</div>
+<script>
+const q=new URLSearchParams(location.search);let T=q.get('t')||localStorage.getItem('jwt')||'';if(q.get('t'))localStorage.setItem('jwt',T);
+const e=s=>(s??'').toString().replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ago=t=>{const s=Date.now()/1e3-t;return s<90?Math.round(s)+'s ago':s<5400?Math.round(s/60)+'m ago':s<172800?(s/3600).toFixed(1)+'h ago':Math.round(s/86400)+'d ago'};
+function job(r){const p=r.total?Math.min(100,100*r.done/r.total):null;
+ return `<div class="c ${r.entry?'':'u'}"><div class="t"><span class="n">${r.entry?'':'? '}${e(r.job)}</span><span class="s ${e(r.status)}">${e(r.status)}</span></div>
+ <div class="m">${e(r.gpu)} GPU · ${e(r.age)}${r.prog?' · '+e(r.prog):''}${r.eta_text?' · <span class=eta>ETA '+e(r.eta_text)+'</span>':''}</div>
+ ${p!==null?`<div class="b"><i style="width:${p}%"></i></div>`:''}
+ <div class="w">${r.what?e(r.what):'<span class=m>unregistered</span>'}${r.by?` <span class=m>[${e(r.by)}]</span>`:''}</div>
+ ${r.note?`<div class="l">${e(r.note)}</div>`:''}</div>`}
+function chain(c){return `<div class="c ${c.unreg?'u':''}"><div class="t"><span class="n">${c.unreg?'? ':''}${e(c.name)}</span><span class="s ${e(c.state)}">${e(c.state)}${c.up?' '+e(c.up):''}</span></div>
+ ${c.eta_text?`<div class="m"><span class=eta>ETA ${e(c.eta_text)}</span></div>`:''}
+ ${c.what?`<div class="w">${e(c.what)} ${c.by?`<span class=m>[${e(c.by)}]</span>`:''}</div>`:''}
+ ${c.active&&c.active.length?`<div class="m">waiting on: ${c.active.map(e).join(', ')}</div>`:''}
+ ${c.then?`<div class="m">then: ${e(c.then)}</div>`:''}${c.last?`<div class="l">${e(c.last)}</div>`:''}</div>`}
+let D=null;
+const F=new URLSearchParams(location.hash.slice(1));const G=F.get('g'),R=F.get('r'),K=F.get('k');
+const ub=s=>Uint8Array.from(atob(s.replace(/-/g,'+').replace(/_/g,'/')+'=='.slice(0,(4-s.length%4)%4)),c=>c.charCodeAt(0));
+async function getBlob(){
+ if(R){const [repo,br]=R.split('@');
+  let r=await fetch(`https://api.github.com/repos/${repo}/contents/jw.enc.json?ref=${br}`,{cache:'no-store'});
+  if(r.ok){const j=await r.json();return JSON.parse(atob(j.content.replace(/\s/g,'')))}
+  r=await fetch(`https://raw.githubusercontent.com/${repo}/${br}/jw.enc.json?${Date.now()}`,{cache:'no-store'});
+  if(!r.ok)throw new Error('fetch '+r.status);return r.json()}
+ const r=await fetch('https://api.github.com/gists/'+G,{cache:'no-store'});
+ if(!r.ok)throw new Error(r.status==403?'rate-limited':'fetch '+r.status);
+ return JSON.parse((await r.json()).files['jw.enc.json'].content)}
+async function load(f){const st=document.getElementById('st');st.textContent='…';
+ if(!(G||R)||!K){document.getElementById('out').innerHTML='<p class=err>link is missing its #r=…&k=… part</p>';return}
+ try{const blob=await getBlob();
+  const k=await crypto.subtle.importKey('raw',ub(K),'AES-GCM',false,['decrypt']);
+  const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:ub(blob.iv)},k,ub(blob.ct));
+  const js=await new Response(new Blob([pt]).stream().pipeThrough(new DecompressionStream('gzip'))).text();
+  D=JSON.parse(js);render()}catch(x){st.textContent='error';document.getElementById('out').innerHTML='<p class=err>'+e(x)+'</p>'}}
+function badge(){if(!D)return;const t=D.pushed||D.time,ev=D.every||60,age=Date.now()/1e3-t,b=document.getElementById('on');
+ const hm=new Date(t*1e3).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+ if(age<2.5*ev+60){b.className='ok';b.textContent='● online · updated '+ago(t)}
+ else{b.className='off';b.textContent='● offline · last update '+hm+' ('+ago(t)+')'}}
+function render(){if(!D)return;badge();const o=[];
+ if(!D.runai_ok)o.push('<p class=err>runai list failed on the login node (token expired? run runai login)</p>');
+ if(D.error)o.push(`<p class=err>${e(D.error)}</p>`);
+ o.push(`<h2>RunAI jobs (${D.jobs.length})</h2>`+(D.jobs.map(job).join('')||'<p class=m>none</p>'));
+ o.push(`<h2>Login-node chains (${D.chains.length})</h2>`+(D.chains.map(chain).join('')||'<p class=m>none</p>'));
+ document.getElementById('out').innerHTML=o.join('');document.getElementById('st').textContent=''}
+load();setInterval(load,120000);setInterval(render,15000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)load()});
+</script></body></html>
