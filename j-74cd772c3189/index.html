@@ -4,7 +4,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Jobs"><meta name="theme-color" content="#f5f5f2" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#111" media="(prefers-color-scheme: dark)">
-<link rel="manifest" href="manifest.json"><title>Jobs</title>
+<meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer"><title>Jobs</title>
 <style>
 :root{--bg:#f5f5f2;--card:#fff;--fg:#18181b;--dim:#6b6b70;--faint:#a1a1a6;--line:#e6e6e1;--chip:#ececE7;
  --run:#16a34a;--pend:#d97706;--fail:#dc2626;--done:#2563eb;--idle:#9ca3af;--bar:#16a34a;--acc:#2563eb}
@@ -42,6 +42,10 @@ input.q{width:100%;font:inherit;padding:9px 12px;border-radius:10px;border:1px s
 .pipe{padding:12px 14px;margin-bottom:8px;cursor:pointer}.pipe .then{font-size:13px;color:var(--dim);margin-top:4px}
 .what{margin-top:4px;font-size:15px}
 nav{position:fixed;bottom:0;left:0;right:0;z-index:6;display:flex;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+nav[hidden]{display:none}
+.btn{font:inherit;font-weight:600;width:100%;margin-top:10px;padding:11px;border-radius:10px;border:0;background:var(--acc);color:#fff}
+.login{padding:18px 16px;margin-top:28px}.login .nm{font-size:18px;margin-bottom:10px}
+.login input{width:100%;font:inherit;padding:11px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--fg)}
 nav button{flex:1;font:inherit;font-size:12px;border:0;background:none;color:var(--dim);padding:8px 0 10px;display:flex;flex-direction:column;align-items:center;gap:2px}
 nav button .ic{font-size:20px;line-height:1}nav button.on{color:var(--acc);font-weight:600}
 #sheet{position:fixed;inset:0;z-index:10;background:var(--bg);overflow-y:auto;transform:translateX(100%);transition:transform .22s ease;padding-bottom:40px}
@@ -54,7 +58,7 @@ pre{font:12px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--
 .big{font-size:34px;font-weight:700;font-variant-numeric:tabular-nums}.err{color:var(--fail);font-weight:600}.muted{color:var(--dim)}
 .empty{color:var(--dim);padding:14px;text-align:center}
 </style></head><body>
-<header><div class="hrow"><h1>Jobs</h1><button class="ib" onclick="load(1)" aria-label="refresh">&#8635;</button></div>
+<header><div class="hrow"><h1>Jobs</h1><button class="ib" onclick="load(1)" aria-label="refresh">&#8635;</button><button class="ib" onclick="logout()" aria-label="log out">&#x23FB;</button></div>
 <div><span id="on"></span><span id="st"></span></div></header>
 <main id="out"><p class="empty">loading…</p></main>
 <nav id="nav" hidden>
@@ -92,10 +96,10 @@ async function getBlob(){
  return JSON.parse((await r.json()).files['jw.enc.json'].content)}
 let BLOB=null;
 function loginForm(msg){document.getElementById('on').textContent='';document.getElementById('nav').hidden=true;
- document.getElementById('out').innerHTML=`<form class="c" onsubmit="login(event)" style="margin-top:30px">
- <div class="n" style="margin-bottom:8px">Log in</div>${msg?`<p class=err>${e(msg)}</p>`:''}
- <input id="pw" type="password" autocomplete="current-password" placeholder="password" style="width:100%;font:inherit;padding:8px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--fg)">
- <button style="margin-top:8px;width:100%">unlock</button></form>`;setTimeout(()=>document.getElementById('pw').focus(),50)}
+ document.getElementById('out').innerHTML=`<form class="card login" onsubmit="login(event)">
+ <div class="nm">Log in</div>${msg?`<p class=err style="margin:0 0 10px">${e(msg)}</p>`:''}
+ <input id="pw" type="password" autocomplete="current-password" placeholder="Password">
+ <button class="btn">Unlock</button></form>`;setTimeout(()=>document.getElementById('pw').focus(),50)}
 async function login(ev){ev.preventDefault();const pw=document.getElementById('pw').value;const w=BLOB&&BLOB.wrap;
  if(!w)return loginForm('no password set on the cluster yet (run jw-push passwd)');
  document.getElementById('st').textContent='unlocking…';
