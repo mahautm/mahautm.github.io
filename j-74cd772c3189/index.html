@@ -19,7 +19,7 @@ h2{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--dim)
 .u{border-style:dashed}.err{color:var(--fail);font-weight:600}#st{font-size:12px;color:var(--dim)}
 #on{font-size:12px;font-weight:600}#on.ok{color:var(--run)}#on.off{color:var(--fail)}
 </style></head><body>
-<header><h1>jobs</h1><span id="on"></span><span id="st"></span><button onclick="load(1)">&#8635;</button></header>
+<header><h1>jobs</h1><span id="on"></span><span id="st"></span><button onclick="load(1)">&#8635;</button><button onclick="logout()" title="log out">&#x23FB;</button></header>
 <div id="out">loading...</div>
 <script>
 const q=new URLSearchParams(location.search);let T=q.get('t')||localStorage.getItem('jwt')||'';if(q.get('t'))localStorage.setItem('jwt',T);
@@ -37,10 +37,12 @@ function chain(c){return `<div class="c ${c.unreg?'u':''}"><div class="t"><span 
  ${c.active&&c.active.length?`<div class="m">waiting on: ${c.active.map(e).join(', ')}</div>`:''}
  ${c.then?`<div class="m">then: ${e(c.then)}</div>`:''}${c.last?`<div class="l">${e(c.last)}</div>`:''}</div>`}
 let D=null;
-const F=new URLSearchParams(location.hash.slice(1));const G=F.get('g'),R=F.get('r'),K=F.get('k');
+const F=new URLSearchParams(location.hash.slice(1));const G=F.get('g'),R=F.get('r')||'mahautm/mahautm.github.io@jw-data';
+if(F.get('k'))localStorage.setItem('jwk',F.get('k'));if(location.hash)history.replaceState(null,'',location.pathname);
 const ub=s=>Uint8Array.from(atob(s.replace(/-/g,'+').replace(/_/g,'/')+'=='.slice(0,(4-s.length%4)%4)),c=>c.charCodeAt(0));
+const bu=b=>btoa(String.fromCharCode(...new Uint8Array(b))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
 async function getBlob(){
- if(R){const [repo,br]=R.split('@');
+ if(!G){const [repo,br]=R.split('@');
   let r=await fetch(`https://api.github.com/repos/${repo}/contents/jw.enc.json?ref=${br}`,{cache:'no-store'});
   if(r.ok){const j=await r.json();return JSON.parse(atob(j.content.replace(/\s/g,'')))}
   r=await fetch(`https://raw.githubusercontent.com/${repo}/${br}/jw.enc.json?${Date.now()}`,{cache:'no-store'});
@@ -48,13 +50,30 @@ async function getBlob(){
  const r=await fetch('https://api.github.com/gists/'+G,{cache:'no-store'});
  if(!r.ok)throw new Error(r.status==403?'rate-limited':'fetch '+r.status);
  return JSON.parse((await r.json()).files['jw.enc.json'].content)}
+let BLOB=null;
+function loginForm(msg){document.getElementById('on').textContent='';
+ document.getElementById('out').innerHTML=`<form class="c" onsubmit="login(event)" style="margin-top:30px">
+ <div class="n" style="margin-bottom:8px">Log in</div>${msg?`<p class=err>${e(msg)}</p>`:''}
+ <input id="pw" type="password" autocomplete="current-password" placeholder="password" style="width:100%;font:inherit;padding:8px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--fg)">
+ <button style="margin-top:8px;width:100%">unlock</button></form>`;setTimeout(()=>document.getElementById('pw').focus(),50)}
+async function login(ev){ev.preventDefault();const pw=document.getElementById('pw').value;const w=BLOB&&BLOB.wrap;
+ if(!w)return loginForm('no password set on the cluster yet (run jw-push passwd)');
+ document.getElementById('st').textContent='unlocking…';
+ try{const base=await crypto.subtle.importKey('raw',new TextEncoder().encode(pw),'PBKDF2',false,['deriveKey']);
+  const kek=await crypto.subtle.deriveKey({name:'PBKDF2',hash:'SHA-256',salt:ub(w.salt),iterations:w.iter},base,{name:'AES-GCM',length:256},false,['decrypt']);
+  const k=await crypto.subtle.decrypt({name:'AES-GCM',iv:ub(w.iv)},kek,ub(w.ct));
+  localStorage.setItem('jwk',bu(k));document.getElementById('st').textContent='';load()}
+ catch(x){document.getElementById('st').textContent='';loginForm('wrong password')}}
+function logout(){localStorage.removeItem('jwk');D=null;loginForm()}
 async function load(f){const st=document.getElementById('st');st.textContent='…';
- if(!(G||R)||!K){document.getElementById('out').innerHTML='<p class=err>link is missing its #r=…&k=… part</p>';return}
- try{const blob=await getBlob();
+ try{BLOB=await getBlob();const K=localStorage.getItem('jwk');
+  if(!K){st.textContent='';return loginForm()}
   const k=await crypto.subtle.importKey('raw',ub(K),'AES-GCM',false,['decrypt']);
-  const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:ub(blob.iv)},k,ub(blob.ct));
+  const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:ub(BLOB.iv)},k,ub(BLOB.ct));
   const js=await new Response(new Blob([pt]).stream().pipeThrough(new DecompressionStream('gzip'))).text();
-  D=JSON.parse(js);render()}catch(x){st.textContent='error';document.getElementById('out').innerHTML='<p class=err>'+e(x)+'</p>'}}
+  D=JSON.parse(js);st.textContent='';render()}catch(x){
+  if(x&&x.name==='OperationError'){localStorage.removeItem('jwk');st.textContent='';return loginForm('key changed - log in again')}
+  st.textContent='error';if(!D)document.getElementById('out').innerHTML='<p class=err>'+e(x)+'</p>'}}
 function badge(){if(!D)return;const t=D.pushed||D.time,ev=D.every||60,age=Date.now()/1e3-t,b=document.getElementById('on');
  const hm=new Date(t*1e3).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
  if(age<2.5*ev+60){b.className='ok';b.textContent='● online · updated '+ago(t)}
@@ -65,5 +84,5 @@ function render(){if(!D)return;badge();const o=[];
  o.push(`<h2>RunAI jobs (${D.jobs.length})</h2>`+(D.jobs.map(job).join('')||'<p class=m>none</p>'));
  o.push(`<h2>Login-node chains (${D.chains.length})</h2>`+(D.chains.map(chain).join('')||'<p class=m>none</p>'));
  document.getElementById('out').innerHTML=o.join('');document.getElementById('st').textContent=''}
-load();setInterval(load,120000);setInterval(render,15000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)load()});
+load();setInterval(()=>{if(localStorage.getItem('jwk'))load()},120000);setInterval(render,15000);document.addEventListener('visibilitychange',()=>{if(!document.hidden&&localStorage.getItem('jwk'))load()});
 </script></body></html>
