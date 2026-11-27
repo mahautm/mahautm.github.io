@@ -1,42 +1,82 @@
-<!doctype html><html><head><meta charset="utf-8">
+<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="jobs"><meta name="theme-color" content="#111">
-<meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer"><title>jobs</title>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Jobs"><meta name="theme-color" content="#f5f5f2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.json"><title>Jobs</title>
 <style>
-:root{--bg:#f6f6f4;--card:#fff;--fg:#1b1b1b;--dim:#777;--line:#e4e4e0;--run:#1f8a4c;--pend:#b7791f;--fail:#c0392b;--done:#2b6cb0;--bar:#1f8a4c}
-@media(prefers-color-scheme:dark){:root{--bg:#121212;--card:#1d1d1d;--fg:#eee;--dim:#999;--line:#2c2c2c;--bar:#3fbf73}}
-*{box-sizing:border-box}body{margin:0;font:15px/1.35 -apple-system,system-ui,sans-serif;background:var(--bg);color:var(--fg);padding:env(safe-area-inset-top) 12px 40px}
-header{position:sticky;top:0;background:var(--bg);display:flex;align-items:center;gap:8px;padding:10px 0;z-index:2}
-h1{font-size:19px;margin:0;flex:1}button{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:8px;padding:5px 11px}
-h2{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--dim);margin:18px 2px 6px}
-.c{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:7px 0}
-.t{display:flex;gap:8px;align-items:baseline}.n{font-weight:600;flex:1;word-break:break-all}
-.s{font-size:12px;font-weight:600}.Running,.alive{color:var(--run)}.Pending{color:var(--pend)}.Failed,.Error{color:var(--fail)}.Succeeded,.exited{color:var(--done)}
-.m{font-size:13px;color:var(--dim);margin-top:2px}.w{margin-top:4px}.eta{font-weight:600}
-.b{height:5px;background:var(--line);border-radius:3px;margin-top:6px;overflow:hidden}.b i{display:block;height:100%;background:var(--bar)}
-.l{font:12px ui-monospace,monospace;color:var(--dim);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.u{border-style:dashed}.err{color:var(--fail);font-weight:600}#st{font-size:12px;color:var(--dim)}
-#on{font-size:12px;font-weight:600}#on.ok{color:var(--run)}#on.off{color:var(--fail)}
+:root{--bg:#f5f5f2;--card:#fff;--fg:#18181b;--dim:#6b6b70;--faint:#a1a1a6;--line:#e6e6e1;--chip:#ececE7;
+ --run:#16a34a;--pend:#d97706;--fail:#dc2626;--done:#2563eb;--idle:#9ca3af;--bar:#16a34a;--acc:#2563eb}
+@media(prefers-color-scheme:dark){:root{--bg:#0f0f10;--card:#1a1a1c;--fg:#f2f2f3;--dim:#a1a1a8;--faint:#6b6b72;--line:#2a2a2e;--chip:#26262a;--bar:#22c55e;--acc:#60a5fa}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
+body{padding:0 0 calc(70px + env(safe-area-inset-bottom))}
+header{position:sticky;top:0;z-index:5;background:var(--bg);padding:calc(10px + env(safe-area-inset-top)) 16px 8px;border-bottom:1px solid var(--line)}
+.hrow{display:flex;align-items:center;gap:8px}h1{font-size:22px;margin:0;flex:1;letter-spacing:-.01em}
+.ib{font:inherit;font-size:18px;width:38px;height:38px;border-radius:19px;border:1px solid var(--line);background:var(--card);color:var(--fg)}
+#on{font-size:13px;font-weight:600;margin-top:2px}#on.ok{color:var(--run)}#on.off{color:var(--fail)}#st{font-size:13px;color:var(--dim);margin-left:6px;font-weight:400}
+main{padding:4px 14px}
+h2{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--dim);margin:22px 4px 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.tile{padding:12px 14px}.tile .v{font-size:28px;font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums}.tile .k{font-size:13px;color:var(--dim)}
+.tile.bad .v{color:var(--fail)}.tile .s{font-size:12px;color:var(--faint);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.list{overflow:hidden}.row{display:flex;gap:10px;align-items:center;padding:11px 14px;border-top:1px solid var(--line);cursor:pointer}
+.row:first-child{border-top:0}.row:active{background:var(--chip)}
+.dot{width:10px;height:10px;border-radius:5px;flex:none;background:var(--idle)}
+.dot.Running,.dot.alive{background:var(--run)}.dot.Pending,.dot.Terminating{background:var(--pend)}.dot.Failed,.dot.Error{background:var(--fail)}.dot.Succeeded,.dot.exited,.dot.done{background:var(--done)}
+.mid{flex:1;min-width:0}.nm{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sub{font-size:13px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rt{text-align:right;flex:none}.eta{font-weight:600;font-variant-numeric:tabular-nums}.clk{font-size:12px;color:var(--faint)}
+.bar{height:4px;background:var(--line);border-radius:2px;margin-top:6px;overflow:hidden}.bar i{display:block;height:100%;background:var(--bar);border-radius:2px}
+.u .nm{color:var(--pend)}.over{color:var(--fail)}
+.proj{padding:12px 14px;margin-bottom:10px;cursor:pointer}.proj .t{display:flex;align-items:baseline;gap:8px}.proj .t b{flex:1;font-size:17px}
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:2px 8px;border-radius:10px;background:var(--chip);color:var(--dim);margin:2px 4px 0 0}
+.pill.Running,.pill.alive{color:var(--run)}.pill.Failed,.pill.Error{color:var(--fail)}.pill.Pending{color:var(--pend)}.pill.Succeeded,.pill.exited{color:var(--done)}
+.att{padding:10px 14px;border-left:4px solid var(--fail);margin-bottom:8px;cursor:pointer}.att.warn{border-left-color:var(--pend)}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:10px 0 4px;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;font:inherit;font-size:14px;padding:6px 12px;border-radius:16px;border:1px solid var(--line);background:var(--card);color:var(--fg)}
+.chip.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+input.q{width:100%;font:inherit;padding:9px 12px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--fg);margin-top:8px}
+.pipe{padding:12px 14px;margin-bottom:8px;cursor:pointer}.pipe .then{font-size:13px;color:var(--dim);margin-top:4px}
+.what{margin-top:4px;font-size:15px}
+nav{position:fixed;bottom:0;left:0;right:0;z-index:6;display:flex;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+nav button{flex:1;font:inherit;font-size:12px;border:0;background:none;color:var(--dim);padding:8px 0 10px;display:flex;flex-direction:column;align-items:center;gap:2px}
+nav button .ic{font-size:20px;line-height:1}nav button.on{color:var(--acc);font-weight:600}
+#sheet{position:fixed;inset:0;z-index:10;background:var(--bg);overflow-y:auto;transform:translateX(100%);transition:transform .22s ease;padding-bottom:40px}
+#sheet.open{transform:none}
+.sh{position:sticky;top:0;background:var(--bg);padding:calc(10px + env(safe-area-inset-top)) 12px 10px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line)}
+.sh b{font-size:18px;flex:1;word-break:break-all}.back{font:inherit;font-size:16px;color:var(--acc);background:none;border:0;padding:6px 4px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;padding:12px 14px;font-size:15px}.kv span{min-width:0;overflow-wrap:anywhere}
+.fin{opacity:.6}.kv span:nth-child(odd){color:var(--dim)}
+pre{font:12px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;overflow-x:auto;white-space:pre;margin:0}
+.big{font-size:34px;font-weight:700;font-variant-numeric:tabular-nums}.err{color:var(--fail);font-weight:600}.muted{color:var(--dim)}
+.empty{color:var(--dim);padding:14px;text-align:center}
 </style></head><body>
-<header><h1>jobs</h1><span id="on"></span><span id="st"></span><button onclick="load(1)">&#8635;</button><button onclick="logout()" title="log out">&#x23FB;</button></header>
-<div id="out">loading...</div>
+<header><div class="hrow"><h1>Jobs</h1><button class="ib" onclick="load(1)" aria-label="refresh">&#8635;</button></div>
+<div><span id="on"></span><span id="st"></span></div></header>
+<main id="out"><p class="empty">loading…</p></main>
+<nav id="nav" hidden>
+ <button data-t="ov" onclick="tab('ov')"><span class="ic">&#9673;</span>Overview</button>
+ <button data-t="pr" onclick="tab('pr')"><span class="ic">&#9636;</span>Projects</button>
+ <button data-t="jb" onclick="tab('jb')"><span class="ic">&#9776;</span>Jobs</button>
+</nav>
+<div id="sheet"></div>
 <script>
-const q=new URLSearchParams(location.search);let T=q.get('t')||localStorage.getItem('jwt')||'';if(q.get('t'))localStorage.setItem('jwt',T);
-const e=s=>(s??'').toString().replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const ago=t=>{const s=Date.now()/1e3-t;return s<90?Math.round(s)+'s ago':s<5400?Math.round(s/60)+'m ago':s<172800?(s/3600).toFixed(1)+'h ago':Math.round(s/86400)+'d ago'};
-function job(r){const p=r.total?Math.min(100,100*r.done/r.total):null;
- return `<div class="c ${r.entry?'':'u'}"><div class="t"><span class="n">${r.entry?'':'? '}${e(r.job)}</span><span class="s ${e(r.status)}">${e(r.status)}</span></div>
- <div class="m">${e(r.gpu)} GPU · ${e(r.age)}${r.prog?' · '+e(r.prog):''}${r.eta_text?' · <span class=eta>ETA '+e(r.eta_text)+'</span>':''}</div>
- ${p!==null?`<div class="b"><i style="width:${p}%"></i></div>`:''}
- <div class="w">${r.what?e(r.what):'<span class=m>unregistered</span>'}${r.by?` <span class=m>[${e(r.by)}]</span>`:''}</div>
- ${r.note?`<div class="l">${e(r.note)}</div>`:''}</div>`}
-function chain(c){return `<div class="c ${c.unreg?'u':''}"><div class="t"><span class="n">${c.unreg?'? ':''}${e(c.name)}</span><span class="s ${e(c.state)}">${e(c.state)}${c.up?' '+e(c.up):''}</span></div>
- ${c.eta_text?`<div class="m"><span class=eta>ETA ${e(c.eta_text)}</span></div>`:''}
- ${c.what?`<div class="w">${e(c.what)} ${c.by?`<span class=m>[${e(c.by)}]</span>`:''}</div>`:''}
- ${c.active&&c.active.length?`<div class="m">waiting on: ${c.active.map(e).join(', ')}</div>`:''}
- ${c.then?`<div class="m">then: ${e(c.then)}</div>`:''}${c.last?`<div class="l">${e(c.last)}</div>`:''}</div>`}
-let D=null;
+const e=s=>(s??'').toString().replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const now=()=>Date.now()/1e3;
+const dur=s=>{s=Math.max(0,Math.round(s));const d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60);
+ return d?`${d}d ${h}h`:h?`${h}h${String(m).padStart(2,'0')}`:m?`${m}m`:`${s}s`};
+const ago=t=>dur(now()-t)+' ago';
+const clock=t=>{const d=new Date(t*1e3),td=new Date();const hm=d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+ return d.toDateString()==td.toDateString()?hm:d.toLocaleDateString([],{weekday:'short'})+' '+hm};
+const etaRel=t=>!t?'':(t<now()?'overdue':'in '+dur(t-now()));
+const ACTIVE=new Set(['Running','Pending','Terminating','ContainerCreating','Initializing','Queued']);
+let D=null,TAB=localStorage.getItem('jwtab')||'ov',PF=null,JF='active',Q='';
+const proj=x=>x.project||(x.entry||x.what?'Other':'Unregistered');
+const res=r=>parseFloat(r.gpu)>0?e(r.gpu)+' GPU':'CPU';
+const pct=r=>r.total?Math.min(100,100*r.done/r.total):null;
 const F=new URLSearchParams(location.hash.slice(1));const G=F.get('g'),R=F.get('r')||'mahautm/mahautm.github.io@jw-data';
 if(F.get('k'))localStorage.setItem('jwk',F.get('k'));if(location.hash)history.replaceState(null,'',location.pathname);
 const ub=s=>Uint8Array.from(atob(s.replace(/-/g,'+').replace(/_/g,'/')+'=='.slice(0,(4-s.length%4)%4)),c=>c.charCodeAt(0));
@@ -51,7 +91,7 @@ async function getBlob(){
  if(!r.ok)throw new Error(r.status==403?'rate-limited':'fetch '+r.status);
  return JSON.parse((await r.json()).files['jw.enc.json'].content)}
 let BLOB=null;
-function loginForm(msg){document.getElementById('on').textContent='';
+function loginForm(msg){document.getElementById('on').textContent='';document.getElementById('nav').hidden=true;
  document.getElementById('out').innerHTML=`<form class="c" onsubmit="login(event)" style="margin-top:30px">
  <div class="n" style="margin-bottom:8px">Log in</div>${msg?`<p class=err>${e(msg)}</p>`:''}
  <input id="pw" type="password" autocomplete="current-password" placeholder="password" style="width:100%;font:inherit;padding:8px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--fg)">
@@ -64,7 +104,8 @@ async function login(ev){ev.preventDefault();const pw=document.getElementById('p
   const k=await crypto.subtle.decrypt({name:'AES-GCM',iv:ub(w.iv)},kek,ub(w.ct));
   localStorage.setItem('jwk',bu(k));document.getElementById('st').textContent='';load()}
  catch(x){document.getElementById('st').textContent='';loginForm('wrong password')}}
-function logout(){localStorage.removeItem('jwk');D=null;loginForm()}
+function logout(){localStorage.removeItem('jwk');D=null;closeSheet();document.getElementById('nav').hidden=true;loginForm()}
+const canLoad=()=>!!localStorage.getItem('jwk');
 async function load(f){const st=document.getElementById('st');st.textContent='…';
  try{BLOB=await getBlob();const K=localStorage.getItem('jwk');
   if(!K){st.textContent='';return loginForm()}
@@ -74,15 +115,101 @@ async function load(f){const st=document.getElementById('st');st.textContent='�
   D=JSON.parse(js);st.textContent='';render()}catch(x){
   if(x&&x.name==='OperationError'){localStorage.removeItem('jwk');st.textContent='';return loginForm('key changed - log in again')}
   st.textContent='error';if(!D)document.getElementById('out').innerHTML='<p class=err>'+e(x)+'</p>'}}
-function badge(){if(!D)return;const t=D.pushed||D.time,ev=D.every||60,age=Date.now()/1e3-t,b=document.getElementById('on');
- const hm=new Date(t*1e3).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+
+function badge(){const b=document.getElementById('on');if(!D){b.textContent='';return}
+ const t=D.pushed||D.time,ev=D.every||60,age=now()-t;
  if(age<2.5*ev+60){b.className='ok';b.textContent='● online · updated '+ago(t)}
- else{b.className='off';b.textContent='● offline · last update '+hm+' ('+ago(t)+')'}}
-function render(){if(!D)return;badge();const o=[];
- if(!D.runai_ok)o.push('<p class=err>runai list failed on the login node (token expired? run runai login)</p>');
- if(D.error)o.push(`<p class=err>${e(D.error)}</p>`);
- o.push(`<h2>RunAI jobs (${D.jobs.length})</h2>`+(D.jobs.map(job).join('')||'<p class=m>none</p>'));
- o.push(`<h2>Login-node chains (${D.chains.length})</h2>`+(D.chains.map(chain).join('')||'<p class=m>none</p>'));
- document.getElementById('out').innerHTML=o.join('');document.getElementById('st').textContent=''}
-load();setInterval(()=>{if(localStorage.getItem('jwk'))load()},120000);setInterval(render,15000);document.addEventListener('visibilitychange',()=>{if(!document.hidden&&localStorage.getItem('jwk'))load()});
+ else{b.className='off';b.textContent='● offline since '+clock(t)+' ('+ago(t)+')'}}
+function tab(t){TAB=t;localStorage.setItem('jwtab',t);if(t!=='pr')PF=null;render();scrollTo(0,0)}
+function jobRow(r){const p=pct(r),u=!r.entry;
+ return `<div class="row ${u?'u':''}" onclick="openJob('${e(r.job)}')"><span class="dot ${e(r.status)}"></span>
+ <div class="mid"><div class="nm">${u?'? ':''}${e(r.job)}</div>
+ <div class="sub">${r.status!=='Running'?e(r.status)+' · ':''}${p!==null?Math.floor(p)+'% · ':''}${e(r.prog||r.what||'')}</div>
+ ${p!==null?`<div class="bar"><i style="width:${p}%"></i></div>`:''}</div>
+ <div class="rt">${r.eta?`<div class="eta ${r.eta<now()?'over':''}">${etaRel(r.eta)}</div><div class="clk">${clock(r.eta)}</div>`:`<div class="clk">${res(r)}</div>`}</div></div>`}
+function chainCard(c){const st=c.state||'',fin=st==='exited',lab=fin?'finished':st;
+ const pills=!c.active||!c.active.length?'':c.active.length>4?`<span class="pill Running">${c.active.length} jobs running</span>`:c.active.map(j=>`<span class="pill Running">${e(j)}</span>`).join('');
+ return `<div class="card pipe ${c.unreg?'u':''} ${fin?'fin':''}" onclick="openChain('${e(c.name)}')"><div class="hrow"><span class="dot ${e(st)}"></span>
+ <div class="mid"><div class="nm">${c.unreg?'? ':''}${e(c.name)}</div></div>
+ <div class="rt">${c.eta?`<div class="eta">${etaRel(c.eta)}</div><div class="clk">${clock(c.eta)}</div>`:`<div class="clk">${e(lab)}${c.up?' '+e(c.up):''}</div>`}</div></div>
+ ${c.what?`<div class="what">${e(c.what)}</div>`:''}
+ ${pills?`<div>${pills}</div>`:''}
+ ${c.then&&!fin?`<div class="then">next: ${e(c.then)}</div>`:''}</div>`}
+function groups(){const g={};
+ for(const r of D.jobs)(g[proj(r)]??={jobs:[],chains:[]}).jobs.push(r);
+ for(const c of D.chains)(g[c.unreg?'Unregistered':proj(c)]??={jobs:[],chains:[]}).chains.push(c);
+ return Object.entries(g).sort((a,b)=>(a[0]=='Unregistered')-(b[0]=='Unregistered')||a[0].localeCompare(b[0]))}
+function gpuSum(js){return js.filter(r=>r.status==='Running').reduce((s,r)=>s+(parseFloat(r.gpu)||0),0)}
+function overview(){const J=D.jobs,run=J.filter(r=>r.status==='Running'),pend=J.filter(r=>r.status==='Pending'),
+ fail=J.filter(r=>r.status==='Failed'||r.status==='Error'),next=J.filter(r=>ACTIVE.has(r.status)&&r.eta).sort((a,b)=>a.eta-b.eta),o=[];
+ o.push(`<div class="tiles">
+ <div class="card tile"><div class="v">${run.length}</div><div class="k">running</div><div class="s">${gpuSum(J).toFixed(1)} GPU in use</div></div>
+ <div class="card tile"><div class="v">${pend.length}</div><div class="k">pending</div><div class="s">${D.chains.filter(c=>c.alive).length} pipelines alive</div></div>
+ <div class="card tile ${fail.length?'bad':''}"><div class="v">${fail.length}</div><div class="k">failed</div><div class="s">${fail.map(r=>e(r.job)).join(', ')||'none'}</div></div>
+ <div class="card tile"><div class="v" style="font-size:22px;padding-top:4px">${next[0]?etaRel(next[0].eta):'–'}</div><div class="k">next to finish</div><div class="s">${next[0]?e(next[0].job):''}</div></div></div>`);
+ const att=[];
+ if(!D.runai_ok)att.push(['','runai CLI failed on the login node','token expired? run runai login']);
+ if(D.error)att.push(['',`watcher error`,D.error]);
+ for(const r of fail)att.push(['',`${r.job} ${r.status}`,r.what||'',`openJob('${e(r.job)}')`]);
+ for(const r of J.filter(r=>ACTIVE.has(r.status)&&r.eta&&r.eta<now()))att.push(['warn',`${r.job} past its ETA`,r.prog||'',`openJob('${e(r.job)}')`]);
+ const un=J.filter(r=>!r.entry).length+D.chains.filter(c=>c.unreg).length;
+ if(un)att.push(['warn',`${un} unregistered`,'jobs or waiters nobody described',`PF='Unregistered';tab('pr')`]);
+ if(att.length)o.push('<h2>Needs attention</h2>'+att.map(a=>`<div class="card att ${a[0]}" ${a[3]?`onclick="${a[3]}"`:''}><div class="nm">${e(a[1])}</div><div class="sub">${e(a[2])}</div></div>`).join(''));
+ if(next.length)o.push('<h2>Finishing next</h2><div class="card list">'+next.slice(0,5).map(jobRow).join('')+'</div>');
+ o.push('<h2>Projects</h2>'+groups().map(([p,g])=>{const a=g.jobs.filter(r=>ACTIVE.has(r.status)),et=a.map(r=>r.eta).filter(Boolean),
+  f=g.jobs.filter(r=>r.status==='Failed'||r.status==='Error').length,al=g.chains.filter(c=>c.alive).length;
+  return `<div class="card proj" onclick="PF='${e(p)}';tab('pr')"><div class="t"><b>${e(p)}</b><span class="muted">›</span></div>
+  <div>${a.length?`<span class="pill Running">${a.length} running</span>`:''}${f?`<span class="pill Failed">${f} failed</span>`:''}${al?`<span class="pill alive">${al} pipeline${al>1?'s':''}</span>`:''}${gpuSum(g.jobs)?`<span class="pill">${gpuSum(g.jobs).toFixed(1)} GPU</span>`:''}</div>
+  <div class="sub" style="margin-top:4px">${et.length?'all current jobs done '+etaRel(Math.max(...et))+' ('+clock(Math.max(...et))+')':a.length?'no ETA yet':'nothing running'}</div></div>`}).join(''));
+ return o.join('')}
+function projects(){const G=groups(),o=[];
+ o.push(`<div class="chips"><button class="chip ${!PF?'on':''}" onclick="PF=null;render()">All</button>${G.map(([p])=>`<button class="chip ${PF===p?'on':''}" onclick="PF='${e(p)}';render()">${e(p)}</button>`).join('')}</div>`);
+ for(const [p,g] of G){if(PF&&PF!==p)continue;
+  o.push(`<h2>${e(p)}</h2>`);
+  const cs=g.chains.filter(c=>!D.jobs.some(r=>r.job===c.name)).sort((a,b)=>(a.state==='exited')-(b.state==='exited'));
+  if(cs.length)o.push(cs.map(chainCard).join(''));
+  const js=g.jobs.slice().sort((a,b)=>ACTIVE.has(b.status)-ACTIVE.has(a.status)||(a.eta||9e12)-(b.eta||9e12));
+  if(js.length)o.push('<div class="card list">'+js.map(jobRow).join('')+'</div>')}
+ return o.join('')}
+const JFILT={active:r=>ACTIVE.has(r.status),Running:r=>r.status==='Running',Pending:r=>r.status==='Pending',
+ Failed:r=>r.status==='Failed'||r.status==='Error',Done:r=>r.status==='Succeeded',all:()=>true};
+function jobs(){
+ return `<input class="q" placeholder="search jobs, projects…" value="${e(Q)}" oninput="Q=this.value;document.getElementById('jl').innerHTML=jobList()">
+ <div class="chips">${Object.keys(JFILT).map(k=>`<button class="chip ${JF===k?'on':''}" onclick="JF='${k}';render()">${k} (${D.jobs.filter(JFILT[k]).length})</button>`).join('')}</div>
+ <div id="jl">${jobList()}</div>`}
+function jobList(){
+ const ql=Q.toLowerCase(),js=D.jobs.filter(JFILT[JF]).filter(r=>!ql||(r.job+' '+r.what+' '+proj(r)).toLowerCase().includes(ql)).sort((a,b)=>(a.eta||9e12)-(b.eta||9e12));
+ return js.length?'<div class="card list" style="margin-top:8px">'+js.map(jobRow).join('')+'</div>':'<p class="empty">no jobs</p>'}
+function render(){if(!D)return;badge();document.getElementById('nav').hidden=false;
+ document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.t===TAB));
+ const o=document.getElementById('out');
+ if(TAB==='jb'&&document.activeElement&&document.activeElement.classList.contains('q')){document.getElementById('jl').innerHTML=jobList();}
+ else o.innerHTML=TAB==='pr'?projects():TAB==='jb'?jobs():overview();
+ if(SHEET)SHEET()}
+let SHEET=null;
+function sheet(html){const s=document.getElementById('sheet');s.innerHTML=html;s.classList.add('open')}
+function closeSheet(){SHEET=null;document.getElementById('sheet').classList.remove('open')}
+function show(fn){if(!SHEET)history.pushState({s:1},'');SHEET=fn;fn()}
+addEventListener('popstate',()=>{if(SHEET)closeSheet()});
+const head=(t)=>`<div class="sh"><button class="back" onclick="history.back()">‹ Back</button><b>${e(t)}</b></div>`;
+const kv=a=>'<div class="card kv" style="margin:12px 14px">'+a.filter(x=>x[1]!==undefined&&x[1]!==''&&x[1]!==null).map(([k,v])=>`<span>${e(k)}</span><span>${v}</span>`).join('')+'</div>';
+function openJob(n){show(()=>{const r=D.jobs.find(x=>x.job===n);if(!r){sheet(head(n)+'<p class="empty">no longer listed</p>');return}
+ const p=pct(r),ch=r.entry&&D.chains.find(c=>c.name===r.entry);
+ sheet(head(r.job)+`<div style="padding:14px 14px 0"><span class="pill ${e(r.status)}">${e(r.status)}</span><span class="pill">${e(proj(r))}</span>${r.by?`<span class="pill">${e(r.by)}</span>`:''}
+ ${r.what?`<p style="margin:10px 0 0;font-size:16px">${e(r.what)}</p>`:'<p class="muted">unregistered: no description</p>'}
+ ${p!==null?`<div style="margin-top:14px"><span class="big">${Math.floor(p)}%</span> <span class="muted">${e(r.prog)}</span><div class="bar" style="height:8px"><i style="width:${p}%"></i></div></div>`:''}</div>`+
+ kv([['ETA',r.eta?`<b>${etaRel(r.eta)}</b> · ${clock(r.eta)}${r.src&&r.src.includes('~')?' <span class=muted>(rate estimate)</span>':r.src&&r.src.includes('est')?' <span class=muted>(manual estimate)</span>':''}`:'–'],
+  ['Resources',res(r)],['Age',e(r.age)],['Progress',e(r.prog)],
+  ['Pipeline',r.entry&&r.entry!==r.job?(ch?`<a href="#" onclick="event.preventDefault();openChain('${e(r.entry)}')">${e(r.entry)}</a>`:e(r.entry)):''],
+  ['Next',e(r.then)]])+
+ (r.tail&&r.tail.length?`<h2 style="margin-left:18px">Log (last lines)</h2><div style="padding:0 14px"><pre>${e(r.tail.join('\n'))}</pre></div>`:''))})}
+function openChain(n){show(()=>{const c=D.chains.find(x=>x.name===n);if(!c){sheet(head(n)+'<p class="empty">no longer listed</p>');return}
+ const js=D.jobs.filter(r=>r.entry===c.name);
+ sheet(head(c.name)+`<div style="padding:14px 14px 0"><span class="pill ${e(c.state)}">${c.state==='exited'?'finished':e(c.state)}${c.up?' '+e(c.up):''}</span><span class="pill">${e(c.unreg?'Unregistered':proj(c))}</span>${c.by?`<span class="pill">${e(c.by)}</span>`:''}
+ ${c.what?`<p style="margin:10px 0 0;font-size:16px">${e(c.what)}</p>`:''}</div>`+
+ kv([['ETA',c.eta?`<b>${etaRel(c.eta)}</b> · ${clock(c.eta)}${c.src?' <span class=muted>'+e(c.src.trim())+'</span>':''}`:'–'],['Next',e(c.then)],['PIDs',e(c.pid)],['Log',e(c.log)]])+
+ (js.length?'<h2 style="margin-left:18px">Jobs</h2><div class="card list" style="margin:0 14px">'+js.map(jobRow).join('')+'</div>':'')+
+ (c.tail&&c.tail.length?`<h2 style="margin-left:18px">${c.unreg?'Command':'Log (last lines)'}</h2><div style="padding:0 14px"><pre>${e(c.tail.join('\n'))}</pre></div>`:''))})}
+load();setInterval(()=>{if(canLoad())load()},60000);setInterval(()=>{if(D&&!(document.activeElement&&document.activeElement.classList.contains('q')))render()},20000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&canLoad())load()});
 </script></body></html>
